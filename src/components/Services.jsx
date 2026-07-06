@@ -1,71 +1,120 @@
-import { useState } from 'react';
-import SectionHeader from './SectionHeader';
-import useInView from '../hooks/useInView';
+import { useState } from "react";
 
 const services = [
-  { icon: 'fa-briefcase', title: 'Overseas Job Placement', color: '#E0115F' },
-  { icon: 'fa-passport', title: 'Visa Processing', color: '#FF5C8A' },
-  { icon: 'fa-file-signature', title: 'Document Attestation', color: '#FFD700' },
-  { icon: 'fa-stethoscope', title: 'Medical & Trade Test', color: '#7B2D8E' },
-  { icon: 'fa-chalkboard-user', title: 'Pre-Departure Orientation', color: '#B8004F' },
-  { icon: 'fa-plane', title: 'Air Ticketing & Travel', color: '#E0115F' },
-  { icon: 'fa-shield-halved', title: 'Employer Verification', color: '#FF5C8A' },
-  { icon: 'fa-users', title: 'Skilled & Unskilled Supply', color: '#7B2D8E' },
+  {
+    title: "Overseas Job Placement",
+    desc: "Connecting skilled Pakistani workers with reputable employers across the Gulf and Europe. End-to-end placement support.",
+    icon: "fa-briefcase",
+    color: "bg-primary",
+    img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=80",
+  },
+  {
+    title: "Visa Processing",
+    desc: "Complete visa documentation and processing for work permits, ensuring compliance with destination country requirements.",
+    icon: "fa-passport",
+    color: "bg-secondary",
+    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&q=80",
+  },
+  {
+    title: "Document Attestation",
+    desc: "Degree attestation, certificate verification, and embassy legalization services for overseas employment.",
+    icon: "fa-file-shield",
+    color: "bg-[#FFBC42]",
+    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80",
+  },
+  {
+    title: "Medical & Trade Test Coordination",
+    desc: "Scheduling and coordination of mandatory medical examinations and trade skill assessments.",
+    icon: "fa-stethoscope",
+    color: "bg-cta",
+    img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80",
+  },
+  {
+    title: "Pre-Departure Orientation",
+    desc: "Cultural and practical orientation sessions preparing workers for life and work in their destination country.",
+    icon: "fa-chalkboard-user",
+    color: "bg-teal-600",
+    img: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=600&q=80",
+  },
+  {
+    title: "Air Ticketing & Travel Support",
+    desc: "Competitive airfare arrangements and travel logistics support for a smooth departure experience.",
+    icon: "fa-plane",
+    color: "bg-primary",
+    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80",
+  },
+  {
+    title: "Employer Verification",
+    desc: "Thorough background verification of overseas employers to ensure legitimate and safe placement.",
+    icon: "fa-magnifying-glass",
+    color: "bg-secondary",
+    img: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&q=80",
+  },
+  {
+    title: "Skilled & Unskilled Manpower Supply",
+    desc: "Comprehensive workforce solutions providing skilled professionals and general laborers to overseas employers.",
+    icon: "fa-people-group",
+    color: "bg-[#FFBC42]",
+    img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80",
+  },
 ];
 
-const descriptions = {
-  'Overseas Job Placement': 'We match qualified candidates from Peshawar with verified employers across the Gulf and Europe, ensuring the right fit for both sides.',
-  'Visa Processing': 'Our experts handle the complete visa application process, from document collection to submission, making your journey hassle-free.',
-  'Document Attestation': 'We manage all document attestation and verification requirements with relevant government authorities and embassies.',
-  'Medical & Trade Test': 'Coordination of medical examinations and trade tests at authorized centers to meet international employer standards.',
-  'Pre-Departure Orientation': 'Comprehensive orientation sessions covering cultural awareness, workplace expectations, and travel tips for your destination country.',
-  'Air Ticketing & Travel': 'We arrange competitive airfare and provide travel support to ensure a smooth journey from Peshawar to your destination.',
-  'Employer Verification': 'We thoroughly vet all employers to ensure they are reputable, licensed, and offer fair working conditions and compensation.',
-  'Skilled & Unskilled Supply': 'We recruit both skilled professionals (nurses, welders, technicians) and unskilled workers for various industries abroad.',
-};
+function ImgWithFallback({ src, alt, className }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className={`${className} bg-gray-200 flex items-center justify-center`}>
+        <i className="fas fa-image text-gray-400 text-3xl"></i>
+      </div>
+    );
+  }
+  return <img src={src} alt={alt} className={className} onError={() => setFailed(true)} loading="lazy" />;
+}
 
 export default function Services() {
-  const ref = useInView();
-  const [active, setActive] = useState(services[0].title);
-
   return (
-    <section id="services" className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #fff 0%, var(--color-background) 50%, #fff 100%)' }} ref={ref}>
-      <div className="max-w-[1180px] mx-auto px-6 relative z-10">
-        <div className="reveal">
-          <SectionHeader tag="Our Services" title="What We Offer"
-            sub="Comprehensive overseas employment services from Peshawar to the world." />
+    <section id="services" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Pill */}
+        <div className="flex justify-center mb-14">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-primary/10 text-primary border border-primary/20">
+            OUR SERVICES
+          </span>
         </div>
 
-        {/* Honeycomb hexagon tiles */}
-        <div className="reveal flex flex-wrap justify-center gap-3 md:gap-4 mb-12 max-w-3xl mx-auto">
-          {services.map((s, i) => (
-            <button
-              key={s.title}
-              onClick={() => setActive(s.title)}
-              className={`hex-wrap w-28 h-28 sm:w-32 sm:h-32 flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-all ${
-                active === s.title ? 'ring-2 ring-[var(--color-accent)] ring-offset-2' : ''
-              }`}
-              style={{ background: s.color }}
-            >
-              <i className={`fas ${s.icon} text-white text-lg sm:text-xl`} />
-              <span className="text-white text-[0.55rem] sm:text-[0.6rem] font-semibold text-center leading-tight px-1">
-                {s.title}
-              </span>
-            </button>
-          ))}
-        </div>
+        <div className="space-y-6">
+          {services.map((s, i) => {
+            const isLeft = i % 2 === 0;
+            const tintBg = s.color;
+            return (
+              <div
+                key={s.title}
+                className={`flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 ${
+                  isLeft ? "" : "md:flex-row-reverse"
+                }`}
+              >
+                {/* Text side */}
+                <div className={`${tintBg} text-white p-6 sm:p-8 md:p-10 flex-1 flex flex-col justify-center`}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                      <i className={`fas ${s.icon} text-lg`}></i>
+                    </div>
+                    <h3 className="font-heading text-lg sm:text-xl font-bold">{s.title}</h3>
+                  </div>
+                  <p className="text-white/80 text-sm sm:text-base leading-relaxed max-w-md">{s.desc}</p>
+                </div>
 
-        {/* Description panel */}
-        <div className="reveal max-w-2xl mx-auto text-center bg-white rounded-2xl p-8 shadow-lg"
-          style={{ border: '1px solid rgba(224,17,95,.1)' }}>
-          <div className="w-14 h-14 rounded-xl flex items-center justify-center text-xl mx-auto mb-4"
-            style={{ background: 'var(--color-background)', color: 'var(--color-primary)' }}>
-            <i className={`fas ${services.find(s => s.title === active)?.icon}`} />
-          </div>
-          <h3 className="text-xl font-bold text-[#2E0A1C] mb-3">{active}</h3>
-          <p className="text-sm leading-relaxed" style={{ color: '#666' }}>
-            {descriptions[active]}
-          </p>
+                {/* Image side */}
+                <div className="w-full md:w-72 lg:w-80 h-52 md:h-auto flex-shrink-0 overflow-hidden">
+                  <ImgWithFallback
+                    src={s.img}
+                    alt={s.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

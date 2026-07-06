@@ -1,31 +1,36 @@
-const items = [
-  'Saudi Arabia',
-  'UAE',
-  'Qatar',
-  'Oman',
-  'Germany',
-  'Italy',
-  'Poland',
-  'Greece',
-  'Croatia',
-  'License 2192/PWR',
-  'Dabgari Garden, Peshawar',
-  'Gulf & Europe Jobs',
-  'Government Licensed',
-];
-
 export default function MarqueeTicker() {
+  const items = [
+    "Saudi Arabia",
+    "UAE",
+    "Qatar",
+    "Kuwait",
+    "Oman",
+    "Germany",
+    "Poland",
+    "Romania",
+    "Hungary",
+    "License 2193/RWP",
+    "Shamsabad, Murree Road, Rawalpindi",
+    "Overseas Recruitment",
+  ];
+
   return (
-    <div className="relative z-40" style={{ background: 'var(--color-primary)' }}>
-      <div className="overflow-hidden py-2.5 fade-edges">
-        <div className="marquee-track">
-          {[...items, ...items].map((item, i) => (
-            <span key={i} className="flex items-center gap-3 mx-6 text-white text-sm font-medium whitespace-nowrap">
-              <i className="fas fa-circle text-[0.35rem] opacity-60" />
-              {item}
-            </span>
-          ))}
-        </div>
+    <div className="bg-primary text-white py-2.5 overflow-hidden mt-[60px] sm:mt-[68px]">
+      <div className="flex whitespace-nowrap animate-marquee">
+        {/* First set */}
+        {items.map((item, i) => (
+          <span key={i} className="mx-6 text-sm font-medium inline-flex items-center gap-2">
+            <i className="fas fa-star text-accent text-[8px]"></i>
+            {item}
+          </span>
+        ))}
+        {/* Duplicate for seamless loop */}
+        {items.map((item, i) => (
+          <span key={`dup-${i}`} className="mx-6 text-sm font-medium inline-flex items-center gap-2">
+            <i className="fas fa-star text-accent text-[8px]"></i>
+            {item}
+          </span>
+        ))}
       </div>
     </div>
   );

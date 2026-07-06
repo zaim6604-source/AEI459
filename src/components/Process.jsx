@@ -1,70 +1,120 @@
-import SectionHeader from './SectionHeader';
-import useInView from '../hooks/useInView';
-
 const steps = [
-  { num: 1, icon: 'fa-pen-to-square', title: 'Register & Consult', desc: 'Fill out our application form. Our counselors review your profile and discuss the best opportunities tailored to your skills.' },
-  { num: 2, icon: 'fa-file-contract', title: 'Documents & Visa', desc: 'We assist with compiling all required documents, attestation, and the complete visa application process.' },
-  { num: 3, icon: 'fa-stethoscope', title: 'Medical & Trade Test', desc: 'Coordination of medical examinations and trade tests at authorized centers to meet employer standards.' },
-  { num: 4, icon: 'fa-circle-check', title: 'Employer Confirmation', desc: 'We connect you with verified employers, arrange interviews, and help you secure your job offer.' },
-  { num: 5, icon: 'fa-plane-departure', title: 'Ticketing & Departure', desc: 'Pre-departure briefing, travel arrangements, and support to ensure a smooth transition to your new job.' },
+  {
+    num: "01",
+    title: "Register & Consult",
+    desc: "Visit our office at United Centre, Shamsabad or contact us via WhatsApp. Discuss your skills, preferences, and target destinations with our consultants.",
+    icon: "fa-clipboard-list",
+  },
+  {
+    num: "02",
+    title: "Documents & Visa",
+    desc: "Submit your documents for verification. We handle passport, educational certificates, experience letters, and visa application processing.",
+    icon: "fa-file-lines",
+  },
+  {
+    num: "03",
+    title: "Medical & Trade Test",
+    desc: "Undergo mandatory medical examinations and any required trade skill assessments as per destination country requirements.",
+    icon: "fa-stethoscope",
+  },
+  {
+    num: "04",
+    title: "Employer Confirmation",
+    desc: "We coordinate with the overseas employer for final confirmation, contract signing, and all necessary approvals.",
+    icon: "fa-handshake",
+  },
+  {
+    num: "05",
+    title: "Ticketing & Departure",
+    desc: "We arrange your air ticket, provide pre-departure orientation, and ensure you're fully prepared for your journey abroad.",
+    icon: "fa-plane-departure",
+  },
 ];
 
 export default function Process() {
-  const ref = useInView();
-
   return (
-    <section id="process" className="py-24 relative overflow-hidden" ref={ref}>
+    <section id="process" className="py-20 relative overflow-hidden">
       {/* Diagonal band background */}
-      <div className="absolute inset-0 diagonal-band" style={{ background: 'linear-gradient(135deg, #E0115F 0%, #7B2D8E 100%)' }}>
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.05) 1px, transparent 0)',
-          backgroundSize: '24px 24px',
-        }} />
-      </div>
+      <div className="absolute inset-0 bg-background" />
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: "linear-gradient(135deg, transparent 0%, transparent 40%, rgba(0, 107, 166, 0.08) 50%, transparent 60%, transparent 100%)",
+        }}
+      />
 
-      <div className="relative z-10 max-w-[900px] mx-auto px-6">
-        <div className="reveal">
-          <SectionHeader tag="How It Works" title="Your Journey With Us"
-            sub="A simple, step-by-step process from registration to a successful overseas career." light />
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Pill */}
+        <div className="flex justify-center mb-14">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-primary/10 text-primary border border-primary/20">
+            HOW IT WORKS
+          </span>
         </div>
 
-        {/* Winding path */}
+        {/* Vertical timeline */}
         <div className="relative">
-          {/* Curvy SVG line */}
-          <svg className="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 w-full h-full pointer-events-none" viewBox="0 0 600 800" preserveAspectRatio="none">
-            <path d="M300 0 C350 60, 200 120, 300 180 C400 240, 200 300, 300 360 C400 420, 200 480, 300 540 C400 600, 200 660, 300 720 L300 800"
-              stroke="rgba(255,255,255,.2)" strokeWidth="3" fill="none" strokeDasharray="8 6" />
-          </svg>
+          {/* Center line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 hidden md:block"></div>
 
-          <div className="flex flex-col gap-8 md:gap-12 relative">
-            {steps.map((s, i) => {
-              const isLeft = i % 2 === 0;
+          <div className="space-y-12">
+            {steps.map((step, idx) => {
+              const isLeft = idx % 2 === 0;
               return (
-                <div key={s.num}
-                  className={`reveal relative flex items-center gap-6 md:gap-0 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                  style={{ transitionDelay: `${i * 0.1}s` }}>
-
-                  {/* Content */}
-                  <div className={`flex-1 ${isLeft ? 'md:text-right md:pr-16' : 'md:text-left md:pl-16'}`}>
-                    <div className={`bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-7 border border-white/10 ${isLeft ? 'md:mr-0' : 'md:ml-0'}`}>
-                      <div className={`flex items-center gap-3 mb-2 ${isLeft ? 'md:flex-row-reverse' : ''}`}>
-                        <i className={`fas ${s.icon} text-[var(--color-accent)] text-sm`} />
-                        <h3 className="text-lg font-bold text-white">{s.title}</h3>
+                <div key={step.num} className="relative flex items-center">
+                  {/* Mobile layout */}
+                  <div className="md:hidden flex items-start gap-4 w-full">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-heading font-bold text-sm shadow-lg">
+                      {step.num}
+                    </div>
+                    <div className="bg-white rounded-xl p-5 shadow-md border border-primary/10 flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <i className={`fas ${step.icon} text-primary`}></i>
+                        <h3 className="font-heading font-bold text-ink">{step.title}</h3>
                       </div>
-                      <p className="text-sm leading-relaxed text-white/70">{s.desc}</p>
+                      <p className="text-sm text-ink/70 leading-relaxed">{step.desc}</p>
                     </div>
                   </div>
 
-                  {/* Number node */}
-                  <div className="flex-shrink-0 relative z-10">
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white font-black text-lg shadow-lg"
-                      style={{ background: 'var(--color-accent)', color: '#2E0A1C' }}>
-                      {s.num}
-                    </div>
-                  </div>
-
-                  {/* Spacer for other side */}
-                  <div className="flex-1 hidden md:block" />
+                  {/* Desktop layout */}
+                  {isLeft ? (
+                    <>
+                      {/* Left card */}
+                      <div className="hidden md:flex w-[calc(50%-2rem)] justify-end">
+                        <div className="bg-white rounded-xl p-6 shadow-md border border-primary/10 text-right">
+                          <div className="flex items-center justify-end gap-2 mb-2">
+                            <h3 className="font-heading font-bold text-ink">{step.title}</h3>
+                            <i className={`fas ${step.icon} text-primary`}></i>
+                          </div>
+                          <p className="text-sm text-ink/70 leading-relaxed">{step.desc}</p>
+                        </div>
+                      </div>
+                      {/* Center number */}
+                      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-primary text-white items-center justify-center font-heading font-bold text-sm shadow-lg z-10">
+                        {step.num}
+                      </div>
+                      {/* Right spacer */}
+                      <div className="hidden md:block w-[calc(50%-2rem)]"></div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Left spacer */}
+                      <div className="hidden md:block w-[calc(50%-2rem)]"></div>
+                      {/* Center number */}
+                      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-primary text-white items-center justify-center font-heading font-bold text-sm shadow-lg z-10">
+                        {step.num}
+                      </div>
+                      {/* Right card */}
+                      <div className="hidden md:flex w-[calc(50%-2rem)]">
+                        <div className="bg-white rounded-xl p-6 shadow-md border border-primary/10">
+                          <div className="flex items-center gap-2 mb-2">
+                            <i className={`fas ${step.icon} text-primary`}></i>
+                            <h3 className="font-heading font-bold text-ink">{step.title}</h3>
+                          </div>
+                          <p className="text-sm text-ink/70 leading-relaxed">{step.desc}</p>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               );
             })}

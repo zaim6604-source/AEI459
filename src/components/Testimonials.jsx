@@ -1,100 +1,95 @@
-import { useState, useEffect } from 'react';
-import SectionHeader from './SectionHeader';
-import useInView from '../hooks/useInView';
-
 const testimonials = [
   {
-    name: 'Ahmed Khan',
-    location: 'Saudi Arabia',
-    role: 'Construction Supervisor',
-    text: 'Gilget Overseas made my dream of working in Saudi Arabia a reality. From documentation to departure, their team guided me at every step. I am now earning a stable income and supporting my family back in Peshawar.',
+    name: "Ahmed Raza",
+    role: "Construction Worker — Saudi Arabia",
+    quote:
+      "Jabballian Overseas made the entire process smooth and transparent. From documentation to departure, they guided me at every step. I'm now working in Riyadh and earning well.",
     rating: 5,
   },
   {
-    name: 'Fatima Ali',
-    location: 'UAE',
-    role: 'Hospitality Staff',
-    text: 'I was nervous about finding a job abroad, but Gilget Overseas found me a wonderful position in Dubai. The pre-departure orientation was incredibly helpful. Highly recommended!',
+    name: "Muhammad Usman",
+    role: "Driver — Kuwait",
+    quote:
+      "I was hesitant about going abroad, but the team at Jabballian reassured me. They handled my visa and medical tests professionally. Highly recommended for anyone seeking overseas jobs.",
     rating: 5,
   },
   {
-    name: 'Mohammad Usman',
-    location: 'Germany',
-    role: 'Skilled Technician',
-    text: 'The team at Gilget Overseas helped me with everything from my visa to trade tests. Their employer verification gave me peace of mind. I am now working in Berlin and loving it.',
+    name: "Bilal Ahmed",
+    role: "Factory Worker — Poland",
+    quote:
+      "Thanks to Jabballian Overseas, I secured a job in Poland within weeks. Their pre-departure orientation was very helpful. Truly a life-changing experience.",
+    rating: 4,
+  },
+  {
+    name: "Sajid Mahmood",
+    role: "Security Guard — Oman",
+    quote:
+      "Professional, honest, and efficient. They found me a good position in Muscat. The team at United Centre, Shamsabad really cares about their candidates.",
     rating: 5,
   },
   {
-    name: 'Zainab Noor',
-    location: 'Qatar',
-    role: 'Retail Associate',
-    text: 'Thanks to Gilget Overseas, I secured a job in Doha within weeks. Their process was transparent and professional. I appreciate their honest approach and genuine care.',
+    name: "Farhan Ali",
+    role: "Welder — Qatar",
+    quote:
+      "I had tried other agencies before, but Jabballian was different. They verified my employer, arranged everything, and I've been working in Doha for over a year now.",
     rating: 5,
   },
 ];
 
-export default function Testimonials() {
-  const ref = useInView();
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent(prev => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const t = testimonials[current];
-
+function Stars({ count }) {
   return (
-    <section className="py-24 relative overflow-hidden bg-white" ref={ref}>
-      <div className="max-w-[800px] mx-auto px-6 relative z-10">
-        <div className="reveal">
-          <SectionHeader tag="Success Stories" title="What Our Candidates Say" />
+    <div className="flex gap-0.5">
+      {[...Array(5)].map((_, i) => (
+        <i
+          key={i}
+          className={`fas fa-star text-[10px] ${i < count ? "text-accent" : "text-gray-200"}`}
+        ></i>
+      ))}
+    </div>
+  );
+}
+
+export default function Testimonials() {
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Pill */}
+        <div className="flex justify-center mb-14">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-primary/10 text-primary border border-primary/20">
+            SUCCESS STORIES
+          </span>
         </div>
 
-        <div className="reveal relative">
-          {/* Giant quotation mark */}
-          <div className="quote-mark text-[12rem] leading-none text-center select-none pointer-events-none"
-            style={{ color: 'var(--color-primary)' }}>
-            &ldquo;
-          </div>
-
-          {/* Quote content */}
-          <div className="relative -mt-20 text-center px-4">
-            <p className="text-lg sm:text-xl leading-relaxed mb-6" style={{ color: '#444' }}>
-              {t.text}
+        <div className="grid lg:grid-cols-5 gap-8">
+          {/* Big quote-mark column */}
+          <div className="lg:col-span-2 flex flex-col justify-center">
+            <div className="text-[10rem] leading-[0.8] font-heading font-extrabold text-primary/10 select-none">
+              &ldquo;
+            </div>
+            <h3 className="font-heading text-2xl sm:text-3xl font-bold text-ink -mt-8 mb-3">
+              What Our Candidates Say
+            </h3>
+            <p className="text-ink/60 text-sm leading-relaxed">
+              Real stories from workers we've helped place in trusted jobs across the Gulf and Europe.
             </p>
-
-            {/* Gold stars */}
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(t.rating)].map((_, i) => (
-                <i key={i} className="fas fa-star" style={{ color: 'var(--color-accent)' }} />
-              ))}
-            </div>
-
-            <div>
-              <strong className="block text-base text-[#2E0A1C]">{t.name}</strong>
-              <span className="text-sm" style={{ color: 'var(--color-primary)' }}>
-                {t.role} &middot; {t.location}
-              </span>
-            </div>
           </div>
 
-          {/* Dot nav */}
-          <div className="flex justify-center gap-2 mt-10">
-            {testimonials.map((_, i) => (
-              <button
+          {/* Stacked mini cards */}
+          <div className="lg:col-span-3 space-y-4">
+            {testimonials.map((t, i) => (
+              <div
                 key={i}
-                onClick={() => setCurrent(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  i === current ? 'w-8' : ''
-                }`}
-                style={{
-                  background: i === current ? 'var(--color-primary)' : 'rgba(224,17,95,.2)',
-                }}
-                aria-label={`Testimonial ${i + 1}`}
-              />
+                className="bg-background rounded-xl p-5 shadow-sm border border-primary/5 hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <p className="font-heading font-bold text-ink text-sm">{t.name}</p>
+                    <p className="text-xs text-ink/50">{t.role}</p>
+                  </div>
+                  <Stars count={t.rating} />
+                </div>
+                <p className="text-sm text-ink/70 leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
+              </div>
             ))}
           </div>
         </div>

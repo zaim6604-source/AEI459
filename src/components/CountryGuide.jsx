@@ -1,78 +1,143 @@
-import SectionHeader from './SectionHeader';
-import useInView from '../hooks/useInView';
-const countries = [
-  { name: 'Saudi Arabia', capital: 'Riyadh', img: '/images/saudi.jpg', sectors: 'Construction, Drivers' },
-  { name: 'UAE', capital: 'Abu Dhabi', img: '/images/uae.jpg', sectors: 'Hospitality, Retail' },
-  { name: 'Qatar', capital: 'Doha', img: '/images/qatar.jpg', sectors: 'Construction' },
-  { name: 'Germany', capital: 'Berlin', img: '/images/germany.jpg', sectors: 'Nurses, Trades' },
-  { name: 'Italy', capital: 'Rome', img: '/images/italy.jpg', sectors: 'Agriculture' },
-  { name: 'Poland', capital: 'Warsaw', img: '/images/poland.jpg', sectors: 'Welders, Factory' },
-  { name: 'Greece', capital: 'Athens', img: '/images/greece.jpg', sectors: 'Tourism' },
-  { name: 'Croatia', capital: 'Dubrovnik', sectors: 'Hospitality' },
-];
+import { useState } from "react";
 
-const allTags = countries.map(c => c.name);
+function CountryImage({ name, flag, src, className }) {
+  const [failed, setFailed] = useState(false);
 
-export default function CountryGuide() {
-  const ref = useInView();
+  if (failed) {
+    const gradients = {
+      "Saudi Arabia": "from-green-900 to-green-700",
+      UAE: "from-red-600 to-green-600",
+      Qatar: "from-red-700 to-white/10",
+      Kuwait: "from-green-800 to-white/10",
+      Oman: "from-red-700 to-green-700",
+      Germany: "from-yellow-500 to-red-600",
+      Poland: "from-white/10 to-red-600",
+      Romania: "from-yellow-500 to-red-600",
+      Hungary: "from-red-600 to-green-600",
+    };
+    return (
+      <div className={`absolute inset-0 w-full h-full bg-gradient-to-br ${gradients[name] || "from-primary to-secondary"}`}>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-7xl opacity-60">{flag}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section id="countries" className="py-24 relative overflow-hidden" style={{ background: 'var(--color-background)' }} ref={ref}>
-      <div className="max-w-[1180px] mx-auto px-6 relative z-10">
-        <div className="reveal">
-          <SectionHeader tag="Destinations" title="Countries We Serve"
-            sub="We connect workers from Peshawar to trusted employers across the Gulf and Europe." />
+    <img
+      src={src}
+      alt={name}
+      className={className}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+const countries = [
+  {
+    name: "Saudi Arabia",
+    roles: "Construction, Drivers",
+    flag: "🇸🇦",
+    img: "https://images.unsplash.com/photo-1592326871020-04f58c1a52f3?w=800&q=80",
+  },
+  {
+    name: "UAE",
+    roles: "Hospitality",
+    flag: "🇦🇪",
+    img: "https://plus.unsplash.com/premium_photo-1694475634077-e6e4b623b574?w=800&q=80",
+  },
+  {
+    name: "Qatar",
+    roles: "Construction",
+    flag: "🇶🇦",
+    img: "https://plus.unsplash.com/premium_photo-1697730281608-e3d8986c1cef?w=800&q=80",
+  },
+  {
+    name: "Kuwait",
+    roles: "Drivers, Labour",
+    flag: "🇰🇼",
+    img: "https://plus.unsplash.com/premium_photo-1697729914552-368899dc4757?w=600&q=80",
+  },
+  {
+    name: "Oman",
+    roles: "Security",
+    flag: "🇴🇲",
+    img: "https://plus.unsplash.com/premium_photo-1699557068739-5009ef14724a?w=600&q=80",
+  },
+  {
+    name: "Germany",
+    roles: "Nurses, Trades",
+    flag: "🇩🇪",
+    img: "https://plus.unsplash.com/premium_photo-1677486562712-d03d3d9ac23d?w=600&q=80",
+  },
+  {
+    name: "Poland",
+    roles: "Welders, Factory",
+    flag: "🇵🇱",
+    img: "https://plus.unsplash.com/premium_photo-1690921288020-1556d0868ff5?w=800&q=80",
+  },
+  {
+    name: "Romania",
+    roles: "Manufacturing",
+    flag: "🇷🇴",
+    img: "https://images.unsplash.com/photo-1689655451590-be38de8003e2?w=600&q=80",
+  },
+  {
+    name: "Hungary",
+    roles: "Logistics",
+    flag: "🇭🇺",
+    img: "https://plus.unsplash.com/premium_photo-1680721310298-832f3558523d?w=800&q=80",
+  },
+];
+
+export default function CountryGuide() {
+  return (
+    <section id="destinations" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Pill */}
+        <div className="flex justify-center mb-14">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-primary/10 text-primary border border-primary/20">
+            DESTINATIONS
+          </span>
         </div>
 
         {/* Landmark cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {countries.slice(0, 6).map((c, i) => (
-            <div key={c.name}
-              className="reveal group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
-              style={{ transitionDelay: `${i * 0.08}s` }}>
-              {c.img && (
-                <div className="h-44 overflow-hidden">
-                  <img
-                    src={c.img}
-                    alt={c.name}
-                    className="w-full h-full object-cover card-img"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
-                </div>
-              )}
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold text-[#2E0A1C]">{c.name}</h3>
-                  <span className="text-xs text-gray-400">{c.capital}</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {c.sectors.split(', ').map(s => (
-                    <span key={s} className="text-[0.65rem] font-medium px-2.5 py-1 rounded-full"
-                      style={{ background: 'var(--color-background)', color: 'var(--color-primary)' }}>
-                      {s}
-                    </span>
-                  ))}
-                </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          {countries.slice(0, 6).map((c) => (
+            <div
+              key={c.name}
+              className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-52"
+            >
+              <CountryImage
+                name={c.name}
+                flag={c.flag}
+                src={c.img}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h3 className="font-heading text-lg font-bold text-white flex items-center gap-2">
+                  <span className="text-xl">{c.flag}</span> {c.name}
+                </h3>
+                <p className="text-white/80 text-sm mt-1">{c.roles}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Country chip grid */}
-        <div className="reveal">
-          <p className="text-center text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wider">All Destinations</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {allTags.map((name, i) => (
-              <span key={name}
-                className="px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
-                style={{
-                  background: i % 2 === 0 ? 'var(--color-primary)' : 'var(--color-cta)',
-                  color: '#fff',
-                }}>
-                {name}
-              </span>
-            ))}
-          </div>
+        {/* Chip grid for all countries */}
+        <div className="flex flex-wrap justify-center gap-3">
+          {countries.map((c) => (
+            <span
+              key={c.name}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-background text-ink/80 border border-primary/15 hover:bg-primary hover:text-white transition-all duration-200 cursor-default"
+            >
+              <span>{c.flag}</span>
+              {c.name}
+              <span className="text-xs opacity-60">— {c.roles}</span>
+            </span>
+          ))}
         </div>
       </div>
     </section>
