@@ -8,10 +8,10 @@ import CountryGuide from "./components/CountryGuide";
 import Process from "./components/Process";
 import Testimonials from "./components/Testimonials";
 import Gallery from "./components/Gallery";
-import CTABand from "./components/CTABand";
 import Contact from "./components/Contact";
 import FAQs from "./components/FAQs";
 import Footer from "./components/Footer";
+import CTABand from "./components/CTABand";
 import QuickApply from "./components/QuickApply";
 
 export default function App() {
